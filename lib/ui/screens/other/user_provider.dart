@@ -24,4 +24,9 @@ class UserProvider extends ChangeNotifier {
     _currentUser = null;
     notifyListeners();
   }
+
+  void setUser(UserModel user) {
+    _currentUser = user; // تغییر از _user به _currentUser
+    notifyListeners();
+  }
 }

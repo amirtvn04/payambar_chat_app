@@ -7,13 +7,17 @@ import 'package:chat_app/ui/screens/splash/splash_screen.dart';
 import 'package:chat_app/ui/screens/wrapper/wrapper.dart';
 import 'package:flutter/material.dart';
 
+import '../../ui/screens/bottom_navigation/chats_list/chat_room/group_chat_screen.dart';
+import '../../ui/screens/bottom_navigation/chats_list/chat_room/group_info_screen.dart';
+import '../models/group_model.dart';
+
 class RouteUtils {
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     final args = settings.arguments;
     switch (settings.name) {
       case splash:
         return MaterialPageRoute(builder: (context) => const SplashScreen());
-      // Auth
+    // Auth
       case signup:
         return MaterialPageRoute(builder: (context) => const SignupScreen());
       case login:
@@ -23,8 +27,18 @@ class RouteUtils {
       case chatRoom:
         return MaterialPageRoute(
             builder: (context) => ChatScreen(
-                  receiver: args as UserModel,
-                ));
+              receiver: args as UserModel,
+            ));
+      case groupChatRoom:
+        return MaterialPageRoute(
+            builder: (context) => GroupChatScreen(
+              group: args as GroupModel,
+            ));
+      case groupInfo:
+        return MaterialPageRoute(
+            builder: (context) => GroupInfoScreen(
+              group: args as GroupModel,
+            ));
 
       default:
         return MaterialPageRoute(

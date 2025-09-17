@@ -16,3 +16,6 @@ const login = "/login";
 
 const wrapper = "/wrapper";
 const chatRoom = "/chatRoom";
+const String groupChatRoom = 'group_chat_room';
+const String groupInfo = 'group_info';
+

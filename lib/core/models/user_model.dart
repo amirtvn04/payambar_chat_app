@@ -6,6 +6,7 @@ class UserModel {
   final String? name;
   final String? email;
   final String? imageUrl;
+  final String? bio;
   final Map<String, dynamic>? lastMessage;
   final int? unreadCounter;
 
@@ -14,6 +15,7 @@ class UserModel {
       this.name,
       this.email,
       this.imageUrl,
+      this.bio,
       this.lastMessage,
       this.unreadCounter});
 
@@ -23,6 +25,7 @@ class UserModel {
       'name': name,
       'email': email,
       'imageUrl': imageUrl,
+      'bio': bio,
       'lastMessage': lastMessage,
       'unreadCounter': unreadCounter
     };
@@ -35,6 +38,7 @@ class UserModel {
       name: map['name'] != null ? map['name'] as String : null,
       email: map['email'] != null ? map['email'] as String : null,
       imageUrl: map['imageUrl'] != null ? map['imageUrl'] as String : null,
+      bio: map['bio'] != null ? map['bio'] as String : null,
       lastMessage: map['lastMessage'] != null
           ? Map<String, dynamic>.from(
               map['lastMessage'] as Map<String, dynamic>)

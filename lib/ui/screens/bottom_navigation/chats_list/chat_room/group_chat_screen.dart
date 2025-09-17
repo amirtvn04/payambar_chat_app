@@ -1,26 +1,27 @@
 import 'package:chat_app/core/constants/colors.dart';
 import 'package:chat_app/core/constants/styles.dart';
 import 'package:chat_app/core/extension/widget_extension.dart';
-import 'package:chat_app/core/models/user_model.dart';
+import 'package:chat_app/core/models/group_model.dart';
 import 'package:chat_app/core/services/chat_service.dart';
-import 'package:chat_app/ui/screens/auth/login/login_screen.dart';
-import 'package:chat_app/ui/screens/bottom_navigation/chats_list/chat_room/chat_viewmodel.dart';
+import 'package:chat_app/ui/screens/bottom_navigation/chats_list/chat_room/group_chat_viewmodel.dart';
 import 'package:chat_app/ui/screens/bottom_navigation/chats_list/chat_room/chat_widgets.dart';
 import 'package:chat_app/ui/screens/other/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-class ChatScreen extends StatelessWidget {
-  const ChatScreen({super.key, required this.receiver});
-  final UserModel receiver;
+import '../../../../../core/constants/string.dart';
+
+class GroupChatScreen extends StatelessWidget {
+  const GroupChatScreen({super.key, required this.group});
+  final GroupModel group;
 
   @override
   Widget build(BuildContext context) {
     final currentUser = Provider.of<UserProvider>(context).user;
     return ChangeNotifierProvider(
-      create: (context) => ChatViewmodel(ChatService(), currentUser!, receiver),
-      child: Consumer<ChatViewmodel>(builder: (context, model, _) {
+      create: (context) => GroupChatViewmodel(ChatService(), currentUser!, group),
+      child: Consumer<GroupChatViewmodel>(builder: (context, model, _) {
         return Scaffold(
           body: Column(
             children: [
@@ -31,20 +32,19 @@ class ChatScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       35.verticalSpace,
-                      _buildHeader(context, name: receiver.name!),
+                      _buildHeader(context, name: group.name!),
                       15.verticalSpace,
                       Expanded(
                         child: ListView.separated(
                           padding: const EdgeInsets.all(0),
                           itemCount: model.messages.length,
-                          separatorBuilder: (context, index) =>
-                          10.verticalSpace,
+                          separatorBuilder: (context, index) => 10.verticalSpace,
                           itemBuilder: (context, index) {
                             final message = model.messages[index];
-                            return ChatBubble(
-                              isCurrentUser:
-                              message.senderId == currentUser!.uid,
+                            return GroupChatBubble(
+                              isCurrentUser: message.senderId == currentUser!.uid,
                               message: message,
+                              group: group,
                             );
                           },
                         ),
@@ -90,13 +90,33 @@ class ChatScreen extends StatelessWidget {
         ),
         const Spacer(),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 5),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.r),
-              color: grey.withOpacity(0.15)),
-          child: const Icon(Icons.more_vert),
+            borderRadius: BorderRadius.circular(8.r),
+            color: grey.withOpacity(0.15),
+          ),
+          child: IconButton(
+            icon: const Icon(Icons.info_rounded),
+            onPressed: () => Navigator.pushNamed(
+              context,
+              groupInfo,
+              arguments: group,
+            ),
+          ),
         ),
+
       ],
     );
   }
 }
+
+
+
+
+// IconButton(
+// icon: const Icon(Icons.info_outline),
+// onPressed: () => Navigator.pushNamed(
+// context,
+// groupInfo,
+// arguments: group,
+// ),
+// ),
