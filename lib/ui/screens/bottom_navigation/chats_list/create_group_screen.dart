@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:chat_app/core/models/user_model.dart';
 import 'package:chat_app/core/models/group_model.dart'; // اضافه کردن import مدل گروه
 import 'package:chat_app/core/services/database_service.dart';
 import 'package:chat_app/ui/screens/other/user_provider.dart';
 
+import '../../../../core/constants/colors.dart';
+import '../../../../core/constants/styles.dart';
+import '../../../widgets/button_widget.dart';
 import '../../../widgets/textfield_widget.dart';
 
 class CreateGroupScreen extends StatefulWidget {
@@ -131,30 +135,41 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                 itemBuilder: (context, index) {
                   final user = _allUsers[index];
                   final isSelected = _selectedUsers.contains(user);
-                  return ListTile(
-                    leading: user.imageUrl == null
-                        ? CircleAvatar(child: Text(user.name![0]))
-                        : CircleAvatar(
-                      backgroundImage: NetworkImage(user.imageUrl!),
-                    ),
-                    title: Text(user.name ?? ""),
-                    trailing: Checkbox(
-                      value: isSelected,
-                      onChanged: (val) => _toggleUserSelection(user),
-                    ),
-                    onTap: () => _toggleUserSelection(user),
+
+                  return Container(
+                      margin: EdgeInsets.only(bottom: 10.h),
+                      child: ListTile(
+                        tileColor: grey.withOpacity(0.12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+                        ),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+                        leading: user.imageUrl == null
+                            ? CircleAvatar(
+                          backgroundColor: grey.withOpacity(0.5),
+                          radius: 25,
+                          child: Text(user.name![0], style: h),
+                        )
+                            : CircleAvatar(
+                          backgroundImage: NetworkImage(user.imageUrl!),
+                        ),
+                        title: Text(user.name ?? ""),
+                        trailing: Checkbox(
+                          value: isSelected,
+                          onChanged: (val) => _toggleUserSelection(user),
+                        ),
+                        onTap: () => _toggleUserSelection(user),
+                      )
                   );
                 },
               ),
             ),
-            ElevatedButton.icon(
+            CustomButton(
               onPressed: _createGroup,
-              icon: const Icon(Icons.check),
-              label: const Text("Create Group"),
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size.fromHeight(50),
-              ),
-            )
+              text: "Create Group",
+              loading: false,
+            ),
+            const SizedBox(height: 40),
           ],
         ),
       ),

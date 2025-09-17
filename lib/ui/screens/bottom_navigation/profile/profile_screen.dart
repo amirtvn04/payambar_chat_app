@@ -35,7 +35,15 @@ class ProfileScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                40.verticalSpace,
+                30.verticalSpace,
+                Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text("Account Center", style: h)),
+                5.verticalSpace,
+                Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text("You can change your name and other personal information here.", style: body.copyWith(color: grey))),
+                20.verticalSpace,
 
                 // اطلاعات کاربر
                 CustomTextfield(
@@ -53,13 +61,13 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 20.verticalSpace,
 
-                CustomTextfield(
-                  hintText: "Bio",
-                  initialValue: model.bio,
-                  onChanged: model.setBio,
-                  maxLines: 3,
-                ),
-                30.verticalSpace,
+                // CustomTextfield(۱
+                //   hintText: "Bio",
+                //   initialValue: model.bio,
+                //   onChanged: model.setBio,
+                //   maxLines: 3,
+                // ),
+                // 30.verticalSpace,
 
                 // دکمه ذخیره
                 CustomButton(

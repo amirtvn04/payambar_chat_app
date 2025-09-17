@@ -116,23 +116,31 @@ class _GroupInfoScreenState extends State<GroupInfoScreen> {
                   final member = _members[index];
                   final isCurrentUser = member.uid == currentUser?.uid;
 
-                  return ListTile(
-                    leading: member.imageUrl == null
-                        ? CircleAvatar(
-                      backgroundColor: grey.withOpacity(0.3),
-                      child: Text(member.name?[0] ?? 'U'),
-                    )
-                        : CircleAvatar(
-                      backgroundImage: NetworkImage(member.imageUrl!),
+                  return Container(
+                    margin: EdgeInsets.only(bottom: 10.h),
+                    child: ListTile(
+                      tileColor: grey.withOpacity(0.12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                      leading: member.imageUrl == null
+                          ? CircleAvatar(
+                        backgroundColor: grey.withOpacity(0.5),
+                        radius: 25,
+                        child: Text(member.name![0], style: h),
+                      )
+                          : CircleAvatar(
+                        backgroundImage: NetworkImage(member.imageUrl!),
+                      ),
+                      title: Text(member.name ?? "Unknown"),
+                      subtitle: Text(member.email ?? ""),
+                      trailing: !isCurrentUser
+                          ? IconButton(
+                        icon: const Icon(Icons.group_remove, color: Colors.red),
+                        onPressed: () => _showRemoveDialog(member),
+                      )
+                          : null,
                     ),
-                    title: Text(member.name ?? "Unknown"),
-                    subtitle: Text(member.email ?? ""),
-                    trailing: !isCurrentUser
-                        ? IconButton(
-                      icon: const Icon(Icons.remove_circle, color: Colors.red),
-                      onPressed: () => _showRemoveDialog(member),
-                    )
-                        : null,
                   );
                 },
               ),
