@@ -18,104 +18,84 @@ class ChatListViewmodel extends BaseViewmodel {
   List<ChatItem> _filteredChats = [];
 
   List<ChatItem> get chats => _chats;
-
   List<ChatItem> get filteredChats => _filteredChats;
 
-  void search(String value) {
-    if (value.isEmpty) {
+  void search(String query) {
+    if (query.isEmpty) {
       _filteredChats = _chats;
     } else {
       _filteredChats = _chats.where((chat) {
-        return chat.name.toLowerCase().contains(value.toLowerCase());
+        return chat.name.toLowerCase().contains(query.toLowerCase());
       }).toList();
     }
     notifyListeners();
   }
 
-  void fetchChats() async {
+  Future<void> fetchChats() async {
+    setstate(ViewState.loading);
+
     try {
-      setstate(ViewState.loading);
+      // دریافت کاربران
+      final users = await _db.fetchUsers(_currentUser.uid!);
+      final userList = users?.map((e) => UserModel.fromMap(e)).toList() ?? [];
 
-      // گوش دادن به استریم کاربران
-      _db.fetchUserStream(_currentUser.uid!).listen((userData) {
-        final users =
-            userData.docs.map((e) => UserModel.fromMap(e.data())).toList();
+      // دریافت گروه‌ها
+      final groups = await _db.fetchUserGroups(_currentUser.uid!);
+      final groupList = groups?.map((e) => GroupModel.fromMap(e)).toList() ?? [];
 
-        // گوش دادن به استریم گروه‌ها
-        _db.fetchUserGroupsStream(_currentUser.uid!).listen((groupData) {
-          final groups =
-              groupData.docs.map((e) => GroupModel.fromMap(e.data())).toList();
+      // دریافت اطلاعات last message و unread counter برای هر چت
+      final chatItems = await _createChatItems(userList, groupList);
 
-          // ترکیب کاربران و گروه‌ها در یک لیست
-          _combineChats(users, groups);
-        });
-      });
-
+      _chats = chatItems;
+      _filteredChats = _chats;
       setstate(ViewState.idle);
+
     } catch (e) {
       setstate(ViewState.idle);
       log("Error Fetching Chats: $e");
     }
   }
 
-  void _combineChats(List<UserModel> users, List<GroupModel> groups) {
-    // تبدیل کاربران به ChatItem
-    final userChats = users
-        .map((user) => ChatItem(
-              type: ChatType.private,
-              user: user,
-              lastMessage: user.lastMessage,
-              unreadCounter: user.unreadCounter,
-            ))
-        .toList();
+  Future<List<ChatItem>> _createChatItems(List<UserModel> users, List<GroupModel> groups) async {
+    final List<ChatItem> chatItems = [];
 
-    // تبدیل گروه‌ها به ChatItem
-    final groupChats = groups
-        .map((group) => ChatItem(
-              type: ChatType.group,
-              group: group,
-              lastMessage: group.lastMessage,
-              unreadCounter: group.unreadCounter,
-            ))
-        .toList();
+    // برای کاربران
+    for (var user in users) {
+      final chatRoomId = _generateChatRoomId(_currentUser.uid!, user.uid!);
+      final chatInfo = await _db.getChatRoomInfo(chatRoomId, _currentUser.uid!);
 
-    // ترکیب و مرتب‌سازی
-    _chats = [...userChats, ...groupChats];
-    _sortChatsByLastMessage();
+      chatItems.add(ChatItem(
+        type: ChatType.private,
+        user: user,
+        lastMessage: chatInfo['lastMessage'],
+        unreadCounter: chatInfo['unreadCounter'],
+      ));
+    }
 
-    _filteredChats = _chats;
-    notifyListeners();
-  }
+    // برای گروه‌ها
+    for (var group in groups) {
+      final groupInfo = await _db.getGroupInfo(group.groupId!, _currentUser.uid!);
 
-  void _sortChatsByLastMessage() {
-    _chats.sort((a, b) {
+      chatItems.add(ChatItem(
+        type: ChatType.group,
+        group: group,
+        lastMessage: groupInfo['lastMessage'],
+        unreadCounter: groupInfo['unreadCounter'],
+      ));
+    }
+
+    // مرتب‌سازی بر اساس last message
+    chatItems.sort((a, b) {
       final aTime = a.lastMessage?['timestamp'] ?? 0;
       final bTime = b.lastMessage?['timestamp'] ?? 0;
-      return bTime.compareTo(aTime); // جدیدترین اول
+      return bTime.compareTo(aTime);
     });
+
+    return chatItems;
   }
 
-  // متد برای بازنشانی شمارنده پیام‌های نخوانده
-  Future<void> resetUnreadCounter(String chatId, ChatType type) async {
-    try {
-      // برای گروه
-      await _db.resetUnreadCounter(chatId, _currentUser.uid!);
-
-      // به‌روزرسانی لیست محلی
-      final index = _chats.indexWhere((chat) => chat.id == chatId);
-      if (index != -1) {
-        _chats[index] = ChatItem(
-          type: _chats[index].type,
-          user: _chats[index].user,
-          group: _chats[index].group,
-          lastMessage: _chats[index].lastMessage,
-          unreadCounter: 0,
-        );
-        _filteredChats = _chats;
-        notifyListeners();
-      }
-    } catch (e) {
-      log("Error resetting unread counter: $e");
-    }
+  String _generateChatRoomId(String user1Id, String user2Id) {
+    List<String> ids = [user1Id, user2Id]..sort();
+    return "${ids[0]}_${ids[1]}";
   }
 }

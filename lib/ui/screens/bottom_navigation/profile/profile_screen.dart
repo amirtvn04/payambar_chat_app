@@ -87,8 +87,6 @@ class ProfileScreen extends StatelessWidget {
                         email: currentUser?.email,
                         imageUrl: model.imageUrl,
                         bio: model.bio,
-                        lastMessage: currentUser?.lastMessage,
-                        unreadCounter: currentUser?.unreadCounter,
                       ));
 
                     } catch (e) {

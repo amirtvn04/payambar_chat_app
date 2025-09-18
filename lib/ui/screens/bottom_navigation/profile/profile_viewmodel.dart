@@ -68,8 +68,6 @@ class ProfileViewmodel extends BaseViewmodel {
         name: _name.trim(),
         email: _currentUser.email,
         bio: _bio.trim(),
-        lastMessage: _currentUser.lastMessage,
-        unreadCounter: _currentUser.unreadCounter,
       );
 
       setstate(ViewState.idle);

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:chat_app/core/enums/enums.dart';
 import 'package:chat_app/core/models/group_model.dart';
 import 'package:chat_app/core/models/message_model.dart';
 import 'package:chat_app/core/models/user_model.dart';
@@ -14,23 +15,28 @@ class GroupChatViewmodel extends BaseViewmodel {
   final GroupModel _group;
 
   StreamSubscription? _subscription;
+  final TextEditingController _messageController = TextEditingController();
+  List<Message> _messages = []; // اضافه کردن این خط
 
   GroupChatViewmodel(this._chatService, this._currentUser, this._group) {
+    // گوش دادن به پیام‌های گروه
     _subscription = _chatService.getGroupMessages(_group.groupId!).listen((messages) {
       _messages = messages.docs.map((e) => Message.fromMap(e.data())).toList();
       notifyListeners();
     });
+
+    // reset unread counter وقتی کاربر گروه را باز می‌کند
+    _resetUnreadCounter();
   }
 
-  final _messageController = TextEditingController();
-
   TextEditingController get controller => _messageController;
+  List<Message> get messages => _messages; // اضافه کردن getter
 
-  List<Message> _messages = [];
+  Future<void> _resetUnreadCounter() async {
+    await _chatService.resetGroupUnreadCounter(_group.groupId!, _currentUser.uid!);
+  }
 
-  List<Message> get messages => _messages;
-
-  saveMessage() async {
+  Future<void> saveMessage() async {
     log("Send Group Message");
     try {
       if (_messageController.text.isEmpty) {
@@ -68,5 +74,6 @@ class GroupChatViewmodel extends BaseViewmodel {
   void dispose() {
     super.dispose();
     _subscription?.cancel();
+    _messageController.dispose();
   }
 }

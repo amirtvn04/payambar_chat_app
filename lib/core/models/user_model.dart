@@ -7,17 +7,13 @@ class UserModel {
   final String? email;
   final String? imageUrl;
   final String? bio;
-  final Map<String, dynamic>? lastMessage;
-  final int? unreadCounter;
 
   UserModel(
       {this.uid,
       this.name,
       this.email,
       this.imageUrl,
-      this.bio,
-      this.lastMessage,
-      this.unreadCounter});
+      this.bio,});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -26,8 +22,6 @@ class UserModel {
       'email': email,
       'imageUrl': imageUrl,
       'bio': bio,
-      'lastMessage': lastMessage,
-      'unreadCounter': unreadCounter
     };
   }
 
@@ -39,12 +33,6 @@ class UserModel {
       email: map['email'] != null ? map['email'] as String : null,
       imageUrl: map['imageUrl'] != null ? map['imageUrl'] as String : null,
       bio: map['bio'] != null ? map['bio'] as String : null,
-      lastMessage: map['lastMessage'] != null
-          ? Map<String, dynamic>.from(
-              map['lastMessage'] as Map<String, dynamic>)
-          : null,
-      unreadCounter:
-          map['unreadCounter'] != null ? map['unreadCounter'] as int : null,
     );
   }
 
@@ -55,6 +43,6 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(uid: $uid, name: $name, email: $email, imageUrl: $imageUrl, lastMessage: $lastMessage, unreadCounter: $unreadCounter)';
+    return 'UserModel(uid: $uid, name: $name, email: $email, imageUrl: $imageUrl)';
   }
 }

@@ -162,4 +162,34 @@ class DatabaseService {
       rethrow;
     }
   }
+
+  Future<Map<String, dynamic>> getChatRoomInfo(String chatRoomId, String userId) async {
+    try {
+      final doc = await _fire.collection("chatRooms").doc(chatRoomId).get();
+      if (doc.exists) {
+        return {
+          'lastMessage': doc.data()?['lastMessage'],
+          'unreadCounter': doc.data()?['unreadCounters']?[userId] ?? 0
+        };
+      }
+      return {'lastMessage': null, 'unreadCounter': 0};
+    } catch (e) {
+      return {'lastMessage': null, 'unreadCounter': 0};
+    }
+  }
+
+  Future<Map<String, dynamic>> getGroupInfo(String groupId, String userId) async {
+    try {
+      final doc = await _fire.collection("groups").doc(groupId).get();
+      if (doc.exists) {
+        return {
+          'lastMessage': doc.data()?['lastMessage'],
+          'unreadCounter': doc.data()?['unreadCounters']?[userId] ?? 0
+        };
+      }
+      return {'lastMessage': null, 'unreadCounter': 0};
+    } catch (e) {
+      return {'lastMessage': null, 'unreadCounter': 0};
+    }
+  }
 }

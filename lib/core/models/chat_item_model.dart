@@ -21,4 +21,20 @@ class ChatItem {
   String get name => type == ChatType.private ? user?.name ?? '' : group?.name ?? '';
   String get id => type == ChatType.private ? user?.uid ?? '' : group?.groupId ?? '';
   String? get imageUrl => type == ChatType.private ? user?.imageUrl : null;
+
+  ChatItem copyWith({
+    ChatType? type,
+    UserModel? user,
+    GroupModel? group,
+    Map<String, dynamic>? lastMessage,
+    int? unreadCounter,
+  }) {
+    return ChatItem(
+      type: type ?? this.type,
+      user: user ?? this.user,
+      group: group ?? this.group,
+      lastMessage: lastMessage ?? this.lastMessage,
+      unreadCounter: unreadCounter ?? this.unreadCounter,
+    );
+  }
 }
