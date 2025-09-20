@@ -1,8 +1,8 @@
-import 'package:chat_app/core/constants/string.dart';
-import 'package:chat_app/ui/screens/bottom_navigation/bottom_navigation_viewmodel.dart';
-import 'package:chat_app/ui/screens/bottom_navigation/chats_list/chats_list_screen.dart';
-import 'package:chat_app/ui/screens/bottom_navigation/profile/profile_screen.dart';
-import 'package:chat_app/ui/screens/other/user_provider.dart';
+import 'package:payambar/core/constants/string.dart';
+import 'package:payambar/ui/screens/bottom_navigation/bottom_navigation_viewmodel.dart';
+import 'package:payambar/ui/screens/bottom_navigation/chats_list/chats_list_screen.dart';
+import 'package:payambar/ui/screens/bottom_navigation/profile/profile_screen.dart';
+import 'package:payambar/ui/screens/other/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';

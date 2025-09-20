@@ -1,8 +1,8 @@
 import 'dart:developer';
 
-import 'package:chat_app/ui/screens/auth/login/login_screen.dart';
-import 'package:chat_app/ui/screens/bottom_navigation/bottom_navigation_screen.dart';
-import 'package:chat_app/ui/screens/other/user_provider.dart';
+import 'package:payambar/ui/screens/auth/login/login_screen.dart';
+import 'package:payambar/ui/screens/bottom_navigation/bottom_navigation_screen.dart';
+import 'package:payambar/ui/screens/other/user_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

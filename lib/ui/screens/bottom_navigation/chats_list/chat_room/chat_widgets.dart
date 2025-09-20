@@ -1,7 +1,7 @@
-import 'package:chat_app/core/constants/colors.dart';
-import 'package:chat_app/core/constants/styles.dart';
-import 'package:chat_app/core/models/message_model.dart';
-import 'package:chat_app/ui/widgets/textfield_widget.dart';
+import 'package:payambar/core/constants/colors.dart';
+import 'package:payambar/core/constants/styles.dart';
+import 'package:payambar/core/models/message_model.dart';
+import 'package:payambar/ui/widgets/textfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:chat_app/core/models/user_model.dart';
-import 'package:chat_app/core/models/group_model.dart'; // اضافه کردن import مدل گروه
-import 'package:chat_app/core/services/database_service.dart';
-import 'package:chat_app/ui/screens/other/user_provider.dart';
+import 'package:payambar/core/models/user_model.dart';
+import 'package:payambar/core/models/group_model.dart'; // اضافه کردن import مدل گروه
+import 'package:payambar/core/services/database_service.dart';
+import 'package:payambar/ui/screens/other/user_provider.dart';
 
 import '../../../../core/constants/colors.dart';
 import '../../../../core/constants/styles.dart';

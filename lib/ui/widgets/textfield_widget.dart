@@ -1,6 +1,6 @@
-import 'package:chat_app/core/constants/colors.dart';
-import 'package:chat_app/core/constants/string.dart';
-import 'package:chat_app/core/constants/styles.dart';
+import 'package:payambar/core/constants/colors.dart';
+import 'package:payambar/core/constants/string.dart';
+import 'package:payambar/core/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

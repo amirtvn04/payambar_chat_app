@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:chat_app/core/models/message_model.dart';
-import 'package:chat_app/core/models/user_model.dart';
-import 'package:chat_app/core/other/base_viewmodel.dart';
-import 'package:chat_app/core/services/chat_service.dart';
+import 'package:payambar/core/models/message_model.dart';
+import 'package:payambar/core/models/user_model.dart';
+import 'package:payambar/core/other/base_viewmodel.dart';
+import 'package:payambar/core/services/chat_service.dart';
 import 'package:flutter/material.dart';
 
 class ChatViewmodel extends BaseViewmodel {

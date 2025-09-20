@@ -1,10 +1,10 @@
-import 'package:chat_app/core/constants/string.dart';
-import 'package:chat_app/core/models/user_model.dart';
-import 'package:chat_app/ui/screens/auth/login/login_screen.dart';
-import 'package:chat_app/ui/screens/auth/signup/signup_screen.dart';
-import 'package:chat_app/ui/screens/bottom_navigation/chats_list/chat_room/chat_screen.dart';
-import 'package:chat_app/ui/screens/splash/splash_screen.dart';
-import 'package:chat_app/ui/screens/wrapper/wrapper.dart';
+import 'package:payambar/core/constants/string.dart';
+import 'package:payambar/core/models/user_model.dart';
+import 'package:payambar/ui/screens/auth/login/login_screen.dart';
+import 'package:payambar/ui/screens/auth/signup/signup_screen.dart';
+import 'package:payambar/ui/screens/bottom_navigation/chats_list/chat_room/chat_screen.dart';
+import 'package:payambar/ui/screens/splash/splash_screen.dart';
+import 'package:payambar/ui/screens/wrapper/wrapper.dart';
 import 'package:flutter/material.dart';
 
 import '../../ui/screens/bottom_navigation/chats_list/chat_room/group_chat_screen.dart';
@@ -15,8 +15,8 @@ class RouteUtils {
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     final args = settings.arguments;
     switch (settings.name) {
-      case splash:
-        return MaterialPageRoute(builder: (context) => const SplashScreen());
+      // case splash:
+      //   return MaterialPageRoute(builder: (context) => const SplashScreen());
     // Auth
       case signup:
         return MaterialPageRoute(builder: (context) => const SignupScreen());
@@ -41,11 +41,7 @@ class RouteUtils {
             ));
 
       default:
-        return MaterialPageRoute(
-          builder: (context) => const Scaffold(
-            body: Center(child: Text("No Route Found")),
-          ),
-        );
+        return MaterialPageRoute(builder: (context) => const Wrapper());
     }
   }
 }

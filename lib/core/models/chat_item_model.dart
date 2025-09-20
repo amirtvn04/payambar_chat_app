@@ -1,4 +1,4 @@
-import 'package:chat_app/core/models/user_model.dart';
+import 'package:payambar/core/models/user_model.dart';
 import 'group_model.dart';
 
 enum ChatType { private, group }

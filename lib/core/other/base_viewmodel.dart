@@ -1,4 +1,4 @@
-import 'package:chat_app/core/enums/enums.dart';
+import 'package:payambar/core/enums/enums.dart';
 import 'package:flutter/material.dart';
 
 class BaseViewmodel extends ChangeNotifier {

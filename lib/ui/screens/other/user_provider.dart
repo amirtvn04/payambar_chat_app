@@ -1,5 +1,5 @@
-import 'package:chat_app/core/models/user_model.dart';
-import 'package:chat_app/core/services/database_service.dart';
+import 'package:payambar/core/models/user_model.dart';
+import 'package:payambar/core/services/database_service.dart';
 import 'package:flutter/material.dart';
 
 class UserProvider extends ChangeNotifier {
@@ -26,7 +26,7 @@ class UserProvider extends ChangeNotifier {
   }
 
   void setUser(UserModel user) {
-    _currentUser = user; // تغییر از _user به _currentUser
+    _currentUser = user;
     notifyListeners();
   }
 }
