@@ -1,8 +1,8 @@
-📱 Chat App (Flutter + Firebase)
+# 📱 Chat App (Flutter + Firebase)
 
 A simple chat application built with Flutter and Firebase that supports both private messaging and group chats.
 
-✨ Features
+## ✨ Features
 
 🔑 User authentication (Firebase Auth – login & signup)
 
@@ -18,7 +18,7 @@ A simple chat application built with Flutter and Firebase that supports both pri
 
 🖼 Responsive UI using Flutter ScreenUtil
 
-🛠 Tech Stack
+### 🛠 Tech Stack
 
 Flutter
 
@@ -31,7 +31,7 @@ Provider
 
 Clean architecture (Model - ViewModel - Service)
 
-📂 Folder Structure
+## 📂 Folder Structure
 lib/
  ┣ core/
  ┃ ┣ constants/        # Colors & styles
@@ -42,7 +42,7 @@ lib/
  ┃ ┣ screens/          # Screens (Login, ChatList, ChatRoom, GroupInfo)
  ┃ ┗ widgets/          # Reusable widgets (ChatBubble, BottomField, etc.)
 
-📌 Roadmap
+## 📌 Roadmap
 
  File & image sharing
 
@@ -50,4 +50,4 @@ lib/
 
  Improved UI/UX (Dark mode, animations)
 
-✍️ Built with ❤️ using Flutter & Firebase by Amir
+## ✍️ Built with ❤️ using Flutter & Firebase by Amir
